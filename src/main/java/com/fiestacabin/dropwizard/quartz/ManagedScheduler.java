@@ -17,12 +17,13 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.yammer.dropwizard.lifecycle.Managed;
-import com.yammer.dropwizard.logging.Log;
 
 public class ManagedScheduler implements Managed {
-	private static final Log LOG = Log.forClass(ManagedScheduler.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ManagedScheduler.class);
 
 	private Scheduler scheduler;
 	private GuiceJobFactory jobFactory;
