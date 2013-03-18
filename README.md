@@ -6,6 +6,14 @@ This is a simple Job Scheduler implementation for dropwizard, integrating Guice 
 Usage
 -----
 
+### Maven Central Dependency ###
+
+    <dependency>
+        <groupId>com.fiestacabin.dropwizard.quartz</groupId>
+        <artifactId>dropwizard-quartz</artifactId>
+        <version>0.6.1</version>
+    </dependency>
+
 In order to use this framework, you need to add an instance of ManagedScheduler to your Dropwizard environment (or use the dropwizard-guice AutoConfigService). This will search the classpath for Job classes marked with the @Scheduled annotation and register them with the Quartz scheduler.
 
 The @Scheduled annotation has two incantations, one using a cron string, and the other specifying a recurring interval.
