@@ -1,4 +1,4 @@
-dropwizard-quartz
+dropwizard-quartz [![Build Status](https://travis-ci.org/jaredstehler/dropwizard-quartz.svg?branch=master)](https://travis-ci.org/jaredstehler/dropwizard-quartz)
 =================
 
 This is a simple Job Scheduler implementation for dropwizard, integrating Guice and Quartz. The nice thing about it is that it allows you to use @Inject to wire up dependencies in your Job instances, and define your scheduling via a @Scheduled annotation.
