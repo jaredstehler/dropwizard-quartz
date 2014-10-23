@@ -11,7 +11,7 @@ Usage
     <dependency>
         <groupId>com.fiestacabin.dropwizard.quartz</groupId>
         <artifactId>dropwizard-quartz</artifactId>
-        <version>0.6.1</version>
+        <version>0.7.1</version>
     </dependency>
 
 In order to use this framework, you need to add an instance of ManagedScheduler to your Dropwizard environment (or use the dropwizard-guice AutoConfigService). This will search the classpath for Job classes marked with the @Scheduled annotation and register them with the Quartz scheduler.
