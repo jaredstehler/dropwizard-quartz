@@ -3,6 +3,7 @@ package com.fiestacabin.dropwizard.quartz;
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
+import io.dropwizard.lifecycle.Managed;
 
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -19,8 +20,6 @@ import org.reflections.Reflections;
 import org.reflections.scanners.SubTypesScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.yammer.dropwizard.lifecycle.Managed;
 
 public class ManagedScheduler implements Managed {
 	private static final Logger LOG = LoggerFactory.getLogger(ManagedScheduler.class);

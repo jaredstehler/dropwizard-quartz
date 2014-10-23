@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.fiestacabin.dropwizard.quartz</groupId>
 	<artifactId>dropwizard-quartz</artifactId>
-	<version>0.6.2-SNAPSHOT</version>
+	<version>0.7.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <parent>
@@ -101,11 +101,27 @@
     </build>
 
 	<dependencies>
-        <dependency>
-            <groupId>com.fiestacabin.dropwizard.guice</groupId>
-            <artifactId>dropwizard-guice</artifactId>
-            <version>0.6.1</version>
-        </dependency>
+		<dependency>
+			<groupId>io.dropwizard</groupId>
+			<artifactId>dropwizard-core</artifactId>
+			<version>0.7.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+			<version>3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
+			<version>0.9.9</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
