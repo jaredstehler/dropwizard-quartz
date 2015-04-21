@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.joda.time.DateTimeZone;
 import org.joda.time.Interval;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,7 +53,7 @@ public class ManagedSchedulerTest {
 	@Test
 	public void itParsesDailyCronExpressions() throws Exception {
 		Interval i = getFireInterval(DailyMorningInterval.class);
-		assertEquals(5, i.getStart().getHourOfDay());
+		assertEquals(9, i.getStart().toDateTime(DateTimeZone.UTC).getHourOfDay());
 		assertEquals(1, i.toDuration().getStandardDays());
 	}
 	
@@ -61,7 +62,7 @@ public class ManagedSchedulerTest {
 	  configuration.setTimezone("America/New_York");
 	  
 	  Interval i = getFireInterval(DailyMorningInterval.class);
-    assertEquals(9, i.getStart().getHourOfDay());
+    assertEquals(13, i.getStart().toDateTime(DateTimeZone.UTC).getHourOfDay());
     assertEquals(1, i.toDuration().getStandardDays());
 	}
 	
