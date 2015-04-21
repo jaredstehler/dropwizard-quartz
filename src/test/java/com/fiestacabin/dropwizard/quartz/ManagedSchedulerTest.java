@@ -6,7 +6,6 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import java.util.Date;
 import java.util.Set;
@@ -17,7 +16,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.quartz.Job;
@@ -33,13 +31,16 @@ public class ManagedSchedulerTest {
 
 	@Mock private Scheduler scheduler;
 	@Mock private GuiceJobFactory jobFactory;
-	@Mock private SchedulerConfiguration configuration;
+	private SchedulerConfiguration configuration;
 	
-	@InjectMocks ManagedScheduler managedScheduler;
+	ManagedScheduler managedScheduler;
 	
 	@Before
 	public void initMocks() {
-		when(configuration.getBasePackage()).thenReturn("com.fiestacabin.dropwizard.quartz.test");
+	  configuration = new SchedulerConfiguration("com.fiestacabin.dropwizard.quartz.test");
+	  configuration.setTimezone("UTC");
+	  
+	  managedScheduler = new ManagedScheduler(scheduler, jobFactory, configuration);
 	}
 	
 	@Test
@@ -51,8 +52,17 @@ public class ManagedSchedulerTest {
 	@Test
 	public void itParsesDailyCronExpressions() throws Exception {
 		Interval i = getFireInterval(DailyMorningInterval.class);
-		assertEquals(9, i.getStart().getHourOfDay());
+		assertEquals(5, i.getStart().getHourOfDay());
 		assertEquals(1, i.toDuration().getStandardDays());
+	}
+	
+	@Test
+	public void itUsesConfiguredTimeZone() throws Exception {
+	  configuration.setTimezone("America/New_York");
+	  
+	  Interval i = getFireInterval(DailyMorningInterval.class);
+    assertEquals(9, i.getStart().getHourOfDay());
+    assertEquals(1, i.toDuration().getStandardDays());
 	}
 	
 	@Test
@@ -91,7 +101,7 @@ public class ManagedSchedulerTest {
 	
 	private Interval getFireInterval(Class<?> c){
 		Scheduled s = c.getAnnotation(Scheduled.class);
-		Trigger t = ManagedScheduler.buildTrigger(s);
+		Trigger t = managedScheduler.buildTrigger(s);
 		
 		Date start = t.getStartTime();
 		Date next = t.getFireTimeAfter(start);

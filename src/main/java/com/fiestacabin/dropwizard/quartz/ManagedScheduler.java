@@ -56,11 +56,11 @@ public class ManagedScheduler implements Managed {
 		}
 	}
 	
-	public static Trigger buildTrigger(Scheduled ann) {
+	public Trigger buildTrigger(Scheduled ann) {
 		TriggerBuilder<Trigger> trigger = newTrigger();
 
 		if (ann.cron() != null && ann.cron().trim().length() > 0) {
-			trigger.withSchedule(CronScheduleBuilder.cronSchedule(ann.cron()));
+			trigger.withSchedule(CronScheduleBuilder.cronSchedule(ann.cron()).inTimeZone(config.getTimezone()));
 		} else if (ann.interval() != -1) {
 			trigger.withSchedule(simpleSchedule()
 					.withIntervalInMilliseconds(
