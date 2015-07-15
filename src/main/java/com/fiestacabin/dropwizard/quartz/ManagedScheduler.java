@@ -5,6 +5,7 @@ import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
 import io.dropwizard.lifecycle.Managed;
 
+import java.util.Date;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -63,9 +64,10 @@ public class ManagedScheduler implements Managed {
 			trigger.withSchedule(CronScheduleBuilder.cronSchedule(ann.cron()).inTimeZone(config.getTimezone()));
 		} else if (ann.interval() != -1) {
 			trigger.withSchedule(simpleSchedule()
-					.withIntervalInMilliseconds(
-							TimeUnit.MILLISECONDS.convert(ann.interval(), ann.unit()))
-					.repeatForever()).startNow();
+                    .withIntervalInMilliseconds(
+                            TimeUnit.MILLISECONDS.convert(ann.interval(), ann.unit()))
+                    .repeatForever())
+                    .startAt(new Date(System.currentTimeMillis() + ann.delayInMillis()));
 		} else {
 			throw new IllegalArgumentException("One of 'cron', 'interval' is required for the @Scheduled annotation");
 		}
