@@ -12,5 +12,6 @@ import java.util.concurrent.TimeUnit;
 public @interface Scheduled {
 	String cron() default "";
 	int interval() default -1;
+	int delayInMillis() default 0;
 	TimeUnit unit() default TimeUnit.SECONDS;
 }
