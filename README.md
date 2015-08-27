@@ -14,14 +14,14 @@ Usage
         <version>0.7.1</version>
     </dependency>
 
-In order to use this framework, you need to add an instance of ManagedScheduler to your Dropwizard environment (or use the dropwizard-guice AutoConfigService). This will search the classpath for Job classes marked with the @Scheduled annotation and register them with the Quartz scheduler.
+In order to use this framework, you need to add an instance of ManagedScheduler to your Dropwizard environment (or use the dropwizard-guice AutoConfigApplication). This will search the classpath for Job classes marked with the @Scheduled annotation and register them with the Quartz scheduler.
 
 ### Example Integration with dropwizard-guice ###
 
 The main service class, which constructs as an auto config service including the local app's base package as well as that of the managed scheduler class, so it will automatically register with the dropwizard environment:
 
 ```java
-public class DwQuartzService extends AutoConfigService<DwQuartzConfiguration> {
+public class DwQuartzService extends AutoConfigApplication<DwQuartzConfiguration> {
 
   public DwQuartzService() {
     super("dw-quartz", DwQuartzService.class.getPackage().getName(), 
